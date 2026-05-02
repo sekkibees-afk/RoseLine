@@ -1,0 +1,17 @@
+{% extends "roseline/base.html" %}
+
+{% block content %}
+
+<h1>Add Horse</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-grid">
+        {{ form.as_p }}
+    </div>
+
+    <button type="submit">Create Horse</button>
+</form>
+
+{% endblock %}

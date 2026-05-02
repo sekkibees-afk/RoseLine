@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('roseline/', include('RoseLineApp.urls')),
     path('', include('RoseLineApp.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path("select2/", include("django_select2.urls")),
 ]
