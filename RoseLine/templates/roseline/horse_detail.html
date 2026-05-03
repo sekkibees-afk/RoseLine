@@ -1,2 +1,220 @@
 {% extends "roseline/base.html" %}
 
+{% block content %}
+
+<div class="horse-detail">
+
+    <!-- HEADER -->
+    <h1>
+        {% if horse.brand_tag %}
+            <span class="brand">{{ horse.brand_tag }}</span>
+        {% endif %}
+        {{ horse.name }}
+    </h1>
+
+    <!-- BASIC INFO -->
+    <section>
+        <h2>Basic Info</h2>
+
+        <p><strong>Breed:</strong> {{ horse.breed.name }}</p>
+        <p><strong>Gender:</strong> {{ horse.get_gender_display }}</p>
+        <p><strong>Coat:</strong> {{ horse.coat_name }}</p>
+        <p><strong>Genetics:</strong> {{ horse.genetics }}</p>
+        <p><strong>Personality:</strong> {{ horse.get_personality_display }}</p>
+        <p><strong>Status:</strong> {{ horse.get_status_display }}</p>
+    </section>
+
+    <!-- =========================
+         LINEAGE TREE
+    ========================== -->
+
+    <section class="lineage">
+        <h2>Lineage</h2>
+
+        <div class="tree">
+
+            <!-- GREAT GRANDPARENTS -->
+            <div class="generation-row">
+                <div class="gen-label">Great Grandparents</div>
+                <div class="gen-nodes">
+                    {% for h in great_grandparents %}
+                        <div class="horse-node">
+                            {% if h %}
+                                <a href="{% url 'roseline:horse_detail' h.slug %}" class="horse-card-node">
+                                    <div class="node-name">
+                                        {% if h.brand_tag %}
+                                            {{ h.brand_tag }} {{ h.name }}
+                                        {% else %}
+                                            {{ h.name }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="node-meta">Great Grandparent</div>
+                                </a>
+                            {% else %}
+                                <div class="horse-card-node empty">Unknown</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- GRANDPARENTS -->
+            <div class="generation-row">
+                <div class="gen-label">Grandparents</div>
+                <div class="gen-nodes">
+                    {% for h in grandparents %}
+                        <div class="horse-node">
+                            {% if h %}
+                                <a href="{% url 'roseline:horse_detail' h.slug %}" class="horse-card-node">
+                                    <div class="node-name">
+                                        {% if h.brand_tag %}
+                                            {{ h.brand_tag }} {{ h.name }}
+                                        {% else %}
+                                            {{ h.name }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="node-meta">Grandparent</div>
+                                </a>
+                            {% else %}
+                                <div class="horse-card-node empty">Unknown</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- PARENTS -->
+            <div class="generation-row">
+                <div class="gen-label">Parents</div>
+                <div class="gen-nodes">
+
+                    <!-- SIRE -->
+                    <div class="horse-node">
+                        {% if sire %}
+                            <a href="{% url 'roseline:horse_detail' sire.slug %}" class="horse-card-node sire">
+                                <div class="node-name">
+                                    {% if sire.brand_tag %}
+                                        {{ sire.brand_tag }} {{ sire.name }}
+                                    {% else %}
+                                        {{ sire.name }}
+                                    {% endif %}
+                                </div>
+                                <div class="node-meta">Sire</div>
+                            </a>
+                        {% else %}
+                            <div class="horse-card-node empty">Unknown Sire</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- DAM -->
+                    <div class="horse-node">
+                        {% if dam %}
+                            <a href="{% url 'roseline:horse_detail' dam.slug %}" class="horse-card-node dam">
+                                <div class="node-name">
+                                    {% if dam.brand_tag %}
+                                        {{ dam.brand_tag }} {{ dam.name }}
+                                    {% else %}
+                                        {{ dam.name }}
+                                    {% endif %}
+                                </div>
+                                <div class="node-meta">Dam</div>
+                            </a>
+                        {% else %}
+                            <div class="horse-card-node empty">Unknown Dam</div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CURRENT -->
+            <div class="generation-row current">
+                <div class="gen-label">Current</div>
+                <div class="gen-nodes">
+                    <div class="horse-card-node current">
+                        <div class="node-name">
+                            {% if horse.brand_tag %}
+                                {{ horse.brand_tag }} {{ horse.name }}
+                            {% else %}
+                                {{ horse.name }}
+                            {% endif %}
+                        </div>
+                        <div class="node-meta">Current Horse</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =========================
+         RELATIONS (TABS)
+    ========================== -->
+
+    <section class="relations">
+
+        <h2>Relations</h2>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('offspring')">Offspring</button>
+            <button class="tab-btn" onclick="showTab('siblings')">Siblings</button>
+        </div>
+
+        <!-- OFFSPRING -->
+        <div id="offspring" class="tab-content active">
+            {% if offspring %}
+                <div class="relation-list">
+                    {% for h in offspring %}
+                        <a href="{% url 'roseline:horse_detail' h.slug %}" class="relation-item">
+                            {% if h.brand_tag %}
+                                {{ h.brand_tag }} {{ h.name }}
+                            {% else %}
+                                {{ h.name }}
+                            {% endif %}
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">No offspring</p>
+            {% endif %}
+        </div>
+
+        <!-- SIBLINGS -->
+        <div id="siblings" class="tab-content">
+            {% if siblings %}
+                <div class="relation-list">
+                    {% for h in siblings %}
+                        <a href="{% url 'roseline:horse_detail' h.slug %}" class="relation-item">
+                            {% if h.brand_tag %}
+                                {{ h.brand_tag }} {{ h.name }}
+                            {% else %}
+                                {{ h.name }}
+                            {% endif %}
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">No siblings</p>
+            {% endif %}
+        </div>
+
+    </section>
+
+</div>
+
+<!-- TAB SCRIPT -->
+<script>
+function showTab(tabId) {
+    const tabs = document.querySelectorAll(".tab-content");
+    const buttons = document.querySelectorAll(".tab-btn");
+
+    tabs.forEach(t => t.classList.remove("active"));
+    buttons.forEach(b => b.classList.remove("active"));
+
+    document.getElementById(tabId).classList.add("active");
+    event.target.classList.add("active");
+}
+</script>
+
+{% endblock %}

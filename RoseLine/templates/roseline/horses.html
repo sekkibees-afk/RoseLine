@@ -1,3 +1,70 @@
 {% extends "roseline/base.html" %}
+{% load static %}
 
-<a href="{% url 'roseline:add_horse' %}">+ Add Horse</a>
+{% block content %}
+
+<div class="page-title">
+    <h1>Your Horses</h1>
+    <a class="add-btn" href="{% url 'roseline:add_horse' %}">+ Add Horse</a>
+</div>
+
+<div class="horse-filters">
+
+    <select name="breed">
+        <option value="">All Breeds</option>
+        <option value="arabian">Arabian</option>
+        <option value="shire">Shire</option>
+    </select>
+
+    <select name="gender">
+        <option value="">All</option>
+        <option value="M">Stallions</option>
+        <option value="F">Mares</option>
+    </select>
+
+    <select name="status">
+        <option value="ACTIVE">Active</option>
+        <option value="SOLD">Sold</option>
+        <option value="VOIDED">Voided</option>
+    </select>
+
+</div>
+
+<div class="horse-grid">
+
+    {% for horse in horses %}
+
+        <a href="{% url 'roseline:horse_detail' horse.slug %}" class="horse-card">
+
+            <div class="horse-card-header">
+                <h2>{{ horse.name }}</h2>
+                <span class="tag">{{ horse.brand_tag }}</span>
+            </div>
+
+            <div class="horse-info">
+                <p><strong>Breed:</strong> {{ horse.breed }}</p>
+                <p><strong>Gender:</strong> {{ horse.get_gender_display }}</p>
+                <p><strong>Status:</strong> {{ horse.get_status_display }}</p>
+            </div>
+
+            <div class="horse-footer">
+                <span class="personality">{{ horse.get_personality_display }}</span>
+
+                {% if horse.is_purebred %}
+                    <span class="badge pure">Purebred</span>
+                {% else %}
+                    <span class="badge mix">Mixed</span>
+                {% endif %}
+            </div>
+
+        </a>
+
+    {% empty %}
+
+        <p class="empty-state">No horses yet. Add your first one.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

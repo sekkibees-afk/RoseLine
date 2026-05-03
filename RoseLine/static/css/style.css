@@ -1,92 +1,7 @@
-/* Reset / base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* =========================
+   RESET
+========================= */
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-    line-height: 1.6;
-    background-color: #f5f6fa;
-    color: #2f3640;
-}
-
-/* Layout */
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px 0;
-}
-
-/* Typography */
-h1, h2, h3 {
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-p {
-    margin-bottom: 15px;
-}
-
-/* Navbar */
-.navbar {
-    background: #273c75;
-    color: white;
-    padding: 15px 0;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    margin-left: 15px;
-    font-size: 14px;
-}
-
-.navbar a:hover {
-    text-decoration: underline;
-}
-
-/* Buttons */
-.btn {
-    display: inline-block;
-    background: #40739e;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.btn:hover {
-    background: #487eb0;
-}
-
-/* Cards */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-}
-
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    color: #888;
-}
-
-/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -94,43 +9,50 @@ p {
     font-family: Arial, sans-serif;
 }
 
-/* Page centering */
+body {
+    background: #f5f6fa;
+    color: #2f3640;
+}
+
+/* =========================
+   LAYOUT WRAPPER
+========================= */
+
 .page-wrapper {
     max-width: 1100px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Top row */
+/* =========================
+   HEADER
+========================= */
+
+header {
+    border-bottom: 2px solid #eee;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
 .header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
 }
 
 .logo {
     font-size: 26px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-weight: bold;
 }
 
 .logo span {
     color: #c2185b;
 }
 
-/* thin accent line under header */
-header {
-    border-bottom: 2px solid #f3f3f3;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-}
-
-/* Nav bar */
 nav {
-    display: flex;
-    gap: 20px;
     margin-top: 10px;
+    display: flex;
+    gap: 15px;
 }
 
 nav a {
@@ -138,54 +60,410 @@ nav a {
     color: #333;
 }
 
-/* Main content */
+.auth-links {
+    display: flex;
+    gap: 12px;
+}
+
+/* =========================
+   MAIN / FOOTER
+========================= */
+
 main {
     min-height: 60vh;
 }
 
-/* Footer */
 footer {
     margin-top: 40px;
-    padding: 20px 0;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
     text-align: center;
     color: #777;
-    border-top: 1px solid #eee;
 }
 
-.auth-links {
+/* =========================
+   BASIC SECTION BOXES
+========================= */
+
+section {
+    margin-bottom: 25px;
+}
+
+.horse-detail section {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+section h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+p {
+    margin: 5px 0;
+}
+
+/* =========================
+   HORSE DETAIL HEADER
+========================= */
+
+.horse-detail h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.brand {
+    color: #c2185b;
+    margin-right: 6px;
+}
+
+/* =========================
+   LINEAGE TREE
+========================= */
+
+.lineage {
+    margin-top: 40px;
+}
+
+.tree {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+    gap: 55px;
+}
+
+/* ROW CONTAINER */
+.generation-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    padding-left: 160px;
+    min-height: 120px;
     align-items: center;
 }
 
-.auth-links a {
-    text-decoration: none;
-    color: #444;
-    font-weight: 500;
+/* ===== NEW: subtle connector line ===== */
+.generation-row::before {
+    content: "";
+    position: absolute;
+    left: 160px;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: rgba(0,0,0,0.08);
+    z-index: 0;
 }
 
-.auth-links a:hover {
-    color: #c2185b;
+/* LEFT LABEL */
+.gen-label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    color: #888;
+    white-space: nowrap;
+    width: 140px;
+    text-align: right;
 }
 
-.auth-container {
-    max-width: 400px;
-    margin: 60px auto;
-    padding: 20px;
-    background: #fff;
+/* NODE CONTAINER */
+.gen-nodes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    z-index: 1;
+}
+
+/* =========================
+   HORSE CARD NODE
+========================= */
+
+.horse-node {
+    display: flex;
+}
+
+.horse-card-node {
+    width: 170px;
+    min-height: 78px;
+
+    padding: 12px 14px;
     border-radius: 12px;
+
+    background: #1c1c1c;
+    color: white;
+    text-align: center;
+
+    border: 1px solid #2a2a2a;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 2;
 }
 
-.form-group {
-    margin-bottom: 12px;
+.horse-card-node:hover {
+    transform: translateY(-4px);
+    border-color: #c2185b;
+    box-shadow: 0 10px 18px rgba(0,0,0,0.25);
 }
 
-input {
-    width: 100%;
-    padding: 8px;
+/* TEXT */
+.node-name {
+    font-size: 14px;
+    font-weight: 600;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
+.node-meta {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+}
+
+/* =========================
+   SPECIAL NODE STATES
+========================= */
+
+.horse-card-node.current {
+    background: #c2185b;
+    border-color: #c2185b;
+    font-weight: bold;
+}
+
+.horse-card-node.sire {
+    border-left: 4px solid #4da3ff;
+}
+
+.horse-card-node.dam {
+    border-left: 4px solid #ff6b9d;
+}
+
+.horse-card-node.empty {
+    background: transparent;
+    border: 1px dashed #555;
+    color: #888;
+}
+
+/* =========================
+   PYRAMID SPACING (FIXED BALANCE)
+========================= */
+
+.generation-row:nth-child(1) .gen-nodes {
+    gap: 70px;   /* great grandparents */
+}
+
+.generation-row:nth-child(2) .gen-nodes {
+    gap: 45px;   /* grandparents */
+}
+
+.generation-row:nth-child(3) .gen-nodes {
+    gap: 90px;   /* parents wide V */
+}
+
+/* =========================
+   RELATIONS SECTION (TABS)
+========================= */
+
+.relations {
+    margin-top: 40px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    padding: 8px 14px;
+    border: none;
+    background: #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.tab-btn.active {
+    background: #c2185b;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* LIST */
+.relation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.relation-item {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #eee;
+    text-decoration: none;
+    color: #333;
+    transition: 0.2s;
+}
+
+.relation-item:hover {
+    border-color: #c2185b;
+    transform: translateX(4px);
+}
+
+.empty-state {
+    color: #888;
+    font-style: italic;
+}
+
+/* =========================
+   GRID PAGE (UNCHANGED)
+========================= */
+
+.page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-btn {
+    background: #c2185b;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.add-btn:hover {
+    background: #a3154a;
+}
+
+.horse-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.horse-filters select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: white;
+    min-width: 160px;
+}
+
+.horse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.horse-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 16px;
+    border-radius: 14px;
+
+    background: #1c1c1c;
+    color: white;
+    text-decoration: none;
+
+    border: 1px solid #2a2a2a;
+    transition: 0.2s ease;
+}
+
+.horse-card:hover {
+    transform: translateY(-4px);
+    border-color: #c2185b;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+.horse-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tag {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.horse-info {
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.horse-footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.personality {
+    opacity: 0.7;
+}
+
+.badge.pure {
+    color: #4ade80;
+    border: 1px solid #4ade80;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.badge.mix {
+    color: #facc15;
+    border: 1px solid #facc15;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .gen-label {
+        position: static;
+        transform: none;
+        margin-bottom: 8px;
+        text-align: left;
+    }
+
+    .generation-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .generation-row::before {
+        display: none;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+    }
 }

@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Breed(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
@@ -12,8 +13,8 @@ class Breed(models.Model):
 class Horse(models.Model):
 
     class Gender(models.TextChoices):
-        MALE = "M", "Male"
-        FEMALE = "F", "Female"
+        MALE = "M", "Stallion"
+        FEMALE = "F", "Mare"
 
     class Status(models.TextChoices):
         ACTIVE = "ACTIVE", "Still Owned"
@@ -21,26 +22,42 @@ class Horse(models.Model):
         VOIDED = "VOIDED", "Voided"
 
     class Personality(models.TextChoices):
-        CALM = "CALM", "Calm"
-        AGGRESSIVE = "AGG", "Aggressive"
-        NERVOUS = "NER", "Nervous"
-        FRIENDLY = "FRI", "Friendly"
-        STUBBORN = "STU", "Stubborn"
+        ALOOF = "ALOOF", "Aloof"
+        BRONCO = "BRONCO", "Bronco"
+        CAREFREE = "CAR", "Carefree"
+        CLINGY = "CLINGY", "Clingy"
+        DANGEROUS = "DAN", "Dangerous"
+        DISTRUSTFUL = "DIS", "Distrustful"
+        EXTROVERT = "EXT", "Extrovert"
+        FEARFUL = "FEA", "Fearful"
+        FRESH = "FRESH", "Fresh"
+        HOTBLOODED = "HOT", "Hotblooded"
+        JUMPY = "JUMPY", "Jumpy"
+        KICKHAPPY = "KICK", "Kickhappy"
+        LAZY = "LAZY", "Lazy"
+        MINIMALIST = "MINI", "Minimalist"
+        MUDMAGNET = "MUD", "Mudmagnet"
+        SENSITIVE = "SEN", "Sensitive"
+        SERENE = "SER", "Serene"
+        SPIRITED = "SPI", "Spirited"
+        RANCHHAND = "RAN", "Ranchhand"
+        SHOWHORSE = "SHOW", "Showhorse"
+        TRACKER = "TRA", "Tracker"
+        GUARDIAN = "GUA", "Guardian"
+        FERAL = "FERAL", "Feral"
+        INYOURPOCKET = "POCKET", "Inyourpocket"
+        TRAILBOSS = "TRAIL", "Trailboss"
 
     # --- identity ---
     name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True)
 
     brand_tag = models.CharField(max_length=50, blank=True, null=True)
-
     coat_name = models.CharField(max_length=100)
-
     genetics = models.CharField(max_length=255)
 
     # --- core traits ---
-    gender = models.CharField(
-        max_length=1,
-        choices=Gender.choices
-    )
+    gender = models.CharField(max_length=1, choices=Gender.choices)
 
     breed = models.ForeignKey(
         Breed,
@@ -51,7 +68,7 @@ class Horse(models.Model):
     personality = models.CharField(
         max_length=15,
         choices=Personality.choices,
-        default=Personality.CALM
+        default=Personality.MINIMALIST
     )
 
     # --- lineage ---
@@ -99,3 +116,17 @@ class Horse(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+
+            while Horse.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
