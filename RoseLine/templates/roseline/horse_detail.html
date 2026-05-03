@@ -33,29 +33,10 @@
 
         <div class="tree">
 
-            <!-- GREAT GRANDPARENTS -->
-            <div class="generation-row">
-                <div class="gen-label">Great Grandparents</div>
-                <div class="gen-nodes">
-                    {% for h in great_grandparents %}
-                        <div class="horse-node">
-                            {% if h %}
-                                <a href="{% url 'roseline:horse_detail' h.slug %}" class="horse-card-node">
-                                    <div class="node-name">
-                                        {% if h.brand_tag %}
-                                            {{ h.brand_tag }} {{ h.name }}
-                                        {% else %}
-                                            {{ h.name }}
-                                        {% endif %}
-                                    </div>
-                                    <div class="node-meta">Great Grandparent</div>
-                                </a>
-                            {% else %}
-                                <div class="horse-card-node empty">Unknown</div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                </div>
+            <!-- SPACER ROW (cause grandparents kept breaking at the top) -->
+            <div class="generation-row spacer">
+                <div class="gen-label"></div>
+                <div class="gen-nodes"></div>
             </div>
 
             <!-- GRANDPARENTS -->

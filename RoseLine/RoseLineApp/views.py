@@ -30,40 +30,20 @@ def horse_detail(request, slug):
         Q(sire=horse) | Q(dam=horse)
     )
 
-    grandparents = Horse.objects.none()
-    great_grandparents = Horse.objects.none()
-
-   
-    if horse.sire_id or horse.dam_id:
-        grandparents = Horse.objects.filter(
-            Q(id=horse.sire.sire_id if horse.sire else None) |
-            Q(id=horse.sire.dam_id if horse.sire else None) |
-            Q(id=horse.dam.sire_id if horse.dam else None) |
-            Q(id=horse.dam.dam_id if horse.dam else None)
-        ).distinct()
-
-   
-    great_grandparents = Horse.objects.filter(
-        Q(id__in=Horse.objects.filter(
-            Q(id=horse.sire.sire_id if horse.sire else None) |
-            Q(id=horse.sire.dam_id if horse.sire else None)
-        ).values_list("sire_id", flat=True)) |
-        Q(id__in=Horse.objects.filter(
-            Q(id=horse.dam.sire_id if horse.dam else None) |
-            Q(id=horse.dam.dam_id if horse.dam else None)
-        ).values_list("dam_id", flat=True))
-    ).distinct()
+    grandparents = [
+        horse.sire.sire if horse.sire and horse.sire.sire else None,
+        horse.sire.dam if horse.sire and horse.sire.dam else None,
+        horse.dam.sire if horse.dam and horse.dam.sire else None,
+        horse.dam.dam if horse.dam and horse.dam.dam else None,
+    ]
 
     context = {
         "horse": horse,
         "sire": horse.sire,
         "dam": horse.dam,
-
         "siblings": siblings,
         "offspring": offspring,
-
         "grandparents": grandparents,
-        "great_grandparents": great_grandparents,
     }
 
     return render(request, "roseline/horse_detail.html", context)

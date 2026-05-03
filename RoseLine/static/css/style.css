@@ -180,6 +180,14 @@ p {
     z-index: 1;
 }
 
+.generation-row.spacer {
+    min-height: 40px;
+}
+
+.generation-row.spacer::before {
+    display: none;
+}
+
 /* =========================
    HORSE CARD NODE
 ========================= */
