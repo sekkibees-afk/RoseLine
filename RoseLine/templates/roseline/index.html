@@ -8,22 +8,30 @@
     <p>Track your horses, explore bloodlines, and build your legacy.</p>
 </section>
 
-
 <!-- FEATURE SECTION -->
 <section class="features">
     <div class="feature-card">
-        <h3>🐎 Manage Horses</h3>
-        <p>Add, edit, and track all your horses in one place.</p>
+        <h3>🐎 Horses</h3>
+        <p>
+            Add your horses, update their info, and keep everything in one place instead of
+            scattered notes or forgotten spreadsheets.
+        </p>
     </div>
 
     <div class="feature-card">
-        <h3>🌳 Lineage Trees</h3>
-        <p>Visualise ancestry and bloodlines with ease.</p>
+        <h3>🌳 Lineage bloodlines</h3>
+        <p>
+            See where each horse comes from and where it’s going. Parents, offspring,
+            and connections laid out so you don’t have to piece it together in your head.
+        </p>
     </div>
 
     <div class="feature-card">
-        <h3>👤 Your Stable</h3>
-        <p>Keep your collection organised and accessible.</p>
+        <h3>🏡 Your stable, organised</h3>
+        <p>
+            Everything you own, neatly collected. Whether it’s a few horses or a full stable,
+            it stays easy to browse and manage.
+        </p>
     </div>
 </section>
 
@@ -32,9 +40,14 @@
     <h2>Recent Horses</h2>
 
     <div class="horse-list">
-        <div class="horse-card">Coming soon</div>
-        <div class="horse-card">Coming soon</div>
-        <div class="horse-card">Coming soon</div>
+        {% for horse in recent_horses %}
+            <a href="{% url 'roseline:horse_detail' horse.slug %}" class="horse-card">
+                <h3>{{ horse.name }}</h3>
+                <p>{{ horse.breed }}</p>
+            </a>
+        {% empty %}
+            <div class="horse-card">No horses yet</div>
+        {% endfor %}
     </div>
 </section>
 

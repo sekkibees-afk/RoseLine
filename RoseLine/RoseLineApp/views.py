@@ -1,21 +1,47 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from .forms import HorseForm
-from .models import Horse
+from .models import Horse, Breed, Profile
 from django.db.models import Q
 
 
 def index(request):
-    return render(request, "roseline/index.html")
+    recent_horses = Horse.objects.order_by('-created_at')[:3]
+    return render(request, "roseline/index.html", {"recent_horses":recent_horses})
 
 
 @login_required
 def horses(request):
-    horses = Horse.objects.filter(owner=request.user, status="ACTIVE")
-    return render(request, "roseline/horses.html", {"horses": horses})
+    horses = Horse.objects.filter(owner=request.user)
 
+    breed = request.GET.get("breed")
+    gender = request.GET.get("gender")
+    status = request.GET.get("status")
+    query = request.GET.get("q")
+
+    if breed:
+        horses = horses.filter(breed__id=breed)
+
+    if gender:
+        horses = horses.filter(gender=gender)
+
+    if status:
+        horses = horses.filter(status=status)
+
+    if query:
+        horses = horses.filter(
+            Q(name__icontains=query) |
+            Q(brand_tag__icontains=query)
+        )
+
+    breeds = Breed.objects.all()
+
+    return render(request, "roseline/horses.html", {
+        "horses": horses,
+        "breeds": breeds,
+    })
 
 @login_required
 def horse_detail(request, slug):
@@ -50,8 +76,29 @@ def horse_detail(request, slug):
 
 @login_required
 def account(request):
-    return render(request, "roseline/account.html")
+    profile, created = Profile.objects.get_or_create(
+        user=request.user,
+        defaults={"stable_name": request.user.username}
+    )
 
+    if request.method == "POST":
+
+        if "update_name" in request.POST:
+            profile.stable_name = request.POST.get("stable_name") or request.user.username
+            profile.save()
+
+        if "update_avatar" in request.POST:
+            if request.FILES.get("avatar"):
+                profile.avatar = request.FILES.get("avatar")
+                profile.save()
+
+        if "delete_account" in request.POST:
+            user = request.user
+            logout(request)
+            user.delete()
+            return redirect("roseline:index")
+
+    return render(request, "roseline/account.html")
 
 def login_view(request):
     error = None
@@ -97,3 +144,8 @@ def add_horse(request):
         form = HorseForm()
 
     return render(request, "roseline/add_horse.html", {"form":form})
+
+def log_out(request):
+    if request.method == "POST":
+        logout(request)
+    return redirect("roseline:index")

@@ -1,0 +1,167 @@
+/* =========================
+   ACCOUNT PAGE
+========================= */
+
+.account-page {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.account-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+/* AVATAR */
+.avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #c2185b;
+}
+
+.avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #666;
+}
+
+/* STABLE NAME */
+.stable-section {
+    flex: 1;
+}
+
+.stable-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+}
+
+/* ACTION BUTTONS */
+.account-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.logout-btn {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #222;
+}
+
+.delete-btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #c62828;
+}
+
+/* =========================
+   ACCOUNT FORM BUTTONS
+========================= */
+
+.account-card button {
+    background: #c2185b;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    margin-top: 6px;
+}
+
+/* hover */
+.account-card button:hover {
+    background: #a3154a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(194, 24, 91, 0.25);
+}
+
+/* click */
+.account-card button:active {
+    transform: scale(0.97);
+}
+
+/* file input (make it less ugly) */
+.account-card input[type="file"] {
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+/* optional: align nicely */
+.avatar-section form,
+.stable-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+/* stable name input tweak */
+.stable-input {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 100%;
+    transition: border 0.2s;
+}
+
+.stable-input:focus {
+    border-color: #c2185b;
+    outline: none;
+}
+
+.stable-display {
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:90px;
+}
+
+.upload-btn {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+

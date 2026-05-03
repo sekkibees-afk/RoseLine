@@ -475,3 +475,102 @@ p {
         flex-wrap: wrap;
     }
 }
+
+/* =========================
+   FILTER BAR STYLING
+========================= */
+
+.horse-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* SEARCH INPUT */
+.filter-input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    min-width: 220px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.filter-input::placeholder {
+    color: #aaa;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #c2185b;
+    box-shadow: 0 0 0 2px rgba(194, 24, 91, 0.15);
+}
+
+/* DROPDOWNS */
+.filter-select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff;
+    min-width: 160px;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #c2185b;
+    box-shadow: 0 0 0 2px rgba(194, 24, 91, 0.15);
+}
+
+/* BUTTON */
+.filter-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #c2185b;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* HOVER */
+.filter-btn:hover {
+    background: #a3154a;
+    transform: translateY(-1px);
+}
+
+/* CLICK */
+.filter-btn:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .horse-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-input {
+        width: 100%;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .filter-btn {
+        width: 100%;
+    }
+}

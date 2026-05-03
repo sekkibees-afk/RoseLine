@@ -8,27 +8,47 @@
     <a class="add-btn" href="{% url 'roseline:add_horse' %}">+ Add Horse</a>
 </div>
 
-<div class="horse-filters">
+<form method="get" class="horse-filters">
 
-    <select name="breed">
+    <!-- SEARCH -->
+    <input
+        type="text"
+        name="q"
+        placeholder="Search name or brand..."
+        value="{{ request.GET.q }}"
+        class="filter-input"
+    />
+
+    <!-- BREED -->
+    <select name="breed" class="filter-select">
         <option value="">All Breeds</option>
-        <option value="arabian">Arabian</option>
-        <option value="shire">Shire</option>
+        {% for breed in breeds %}
+            <option value="{{ breed.id }}"
+                {% if request.GET.breed == breed.id|stringformat:"s" %}selected{% endif %}>
+                {{ breed.name }}
+            </option>
+        {% endfor %}
     </select>
 
-    <select name="gender">
+    <!-- GENDER -->
+    <select name="gender" class="filter-select">
         <option value="">All</option>
-        <option value="M">Stallions</option>
-        <option value="F">Mares</option>
+        <option value="M" {% if request.GET.gender == "M" %}selected{% endif %}>Stallions</option>
+        <option value="F" {% if request.GET.gender == "F" %}selected{% endif %}>Mares</option>
     </select>
 
-    <select name="status">
-        <option value="ACTIVE">Active</option>
-        <option value="SOLD">Sold</option>
-        <option value="VOIDED">Voided</option>
+    <!-- STATUS -->
+    <select name="status" class="filter-select">
+        <option value="">All Status</option>
+        <option value="ACTIVE" {% if request.GET.status == "ACTIVE" %}selected{% endif %}>Active</option>
+        <option value="SOLD" {% if request.GET.status == "SOLD" %}selected{% endif %}>Sold</option>
+        <option value="VOIDED" {% if request.GET.status == "VOIDED" %}selected{% endif %}>Voided</option>
     </select>
 
-</div>
+    <!-- BUTTON -->
+    <button type="submit" class="filter-btn">Filter</button>
+
+</form>
 
 <div class="horse-grid">
 
@@ -42,7 +62,7 @@
             </div>
 
             <div class="horse-info">
-                <p><strong>Breed:</strong> {{ horse.breed }}</p>
+                <p><strong>Breed:</strong> {{ horse.breed.name }}</p>
                 <p><strong>Gender:</strong> {{ horse.get_gender_display }}</p>
                 <p><strong>Status:</strong> {{ horse.get_status_display }}</p>
             </div>
@@ -61,7 +81,7 @@
 
     {% empty %}
 
-        <p class="empty-state">No horses yet. Add your first one.</p>
+        <p class="empty-state">No horses found.</p>
 
     {% endfor %}
 

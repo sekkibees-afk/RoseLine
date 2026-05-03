@@ -123,3 +123,6 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_URL = "/roseline/login/"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"

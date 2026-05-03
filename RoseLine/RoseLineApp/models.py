@@ -130,3 +130,11 @@ class Horse(models.Model):
             self.slug = slug
 
         super().save(*args, **kwargs)
+
+class Profile(models.Model):
+    user= models.OneToOneField(User, on_delete=models.CASCADE)
+    stable_name = models.CharField(max_length=100)
+    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
